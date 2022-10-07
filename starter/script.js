@@ -56,6 +56,7 @@ const renderCountry = function (data) {
 };
 
 const getCountryAndNeighbor = function (country) {
+  //AJAX call country 1
   const request = new XMLHttpRequest();
   request.open('GET', `https://restcountries.com/v2/name/${country}`);
   request.send();
@@ -64,11 +65,21 @@ const getCountryAndNeighbor = function (country) {
     //upon load parse the JSON file data
     const [data] = JSON.parse(this.responseText);
     console.log(data);
-
+    //render country 1
     renderCountry(data);
+    //get neighbor country (2)
+    const neighbor = data.borders;
+    if (!neighbor) return;
+    const request2 = new XMLHttpRequest();
+    request2.open('GET', `https://restcountries.com/v2/alpha/${neighbor}`);
+    request2.send();
+
+    request2.addEventListener('load', function () {
+      const data2 = JSON.parse(this.responseText);
+    });
   });
 };
 getCountryAndNeighbor('portugal'); //call the GetCountryagetCountryAndNeighbor function
-getCountryAndNeighbor('usa');
-getCountryAndNeighbor('germany');
+// getCountryAndNeighbor('usa');
+// getCountryAndNeighbor('germany');
 // getCountryData('philippines');
