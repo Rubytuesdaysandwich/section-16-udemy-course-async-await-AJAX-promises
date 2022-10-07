@@ -78,11 +78,11 @@ const getCountryAndNeighbor = function (country) {
       const data2 = JSON.parse(this.responseText); //parse and destructure on load event
       console.log(data2);
 
-      renderCountry(data2, 'neighbor');
+      renderCountry(data2, 'neighbour');
     });
   });
 };
-// getCountryAndNeighbor('portugal'); //call the GetCountryagetCountryAndNeighbor function
+getCountryAndNeighbor('portugal'); //call the GetCountryagetCountryAndNeighbor function
 // getCountryAndNeighbor('usa');
-getCountryAndNeighbor('germany');
+// getCountryAndNeighbor('germany');
 // getCountryAndNeighbor('philippines');
