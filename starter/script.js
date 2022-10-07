@@ -38,8 +38,8 @@ const countriesContainer = document.querySelector('.countries');
 //////////////////////////////////////////
 //GET COUNTRY AND NEIGHBOR
 
-const renderCountry = function (data) {
-  const html = ` <article class="country">
+const renderCountry = function (data, className) {
+  const html = ` <article class="${className}">
     <img class="country__img" src="${data.flag}" />
     <div class="country__data">
       <h3 class="country__name">${data.name}</h3>
@@ -68,18 +68,21 @@ const getCountryAndNeighbor = function (country) {
     //render country 1
     renderCountry(data);
     //get neighbor country (2)
-    const neighbor = data.borders;
-    if (!neighbor) return;
+    const neighbour = data.borders;
+    if (!neighbour) return; //if there is no neighbor use the guard clause to return
     const request2 = new XMLHttpRequest();
-    request2.open('GET', `https://restcountries.com/v2/alpha/${neighbor}`);
+    request2.open('GET', `https://restcountries.com/v2/alpha/${neighbour}`);
     request2.send();
 
     request2.addEventListener('load', function () {
-      const data2 = JSON.parse(this.responseText);
+      const data2 = JSON.parse(this.responseText); //parse and destructure on load event
+      console.log(data2);
+
+      renderCountry(data2, 'neighbor');
     });
   });
 };
-getCountryAndNeighbor('portugal'); //call the GetCountryagetCountryAndNeighbor function
+// getCountryAndNeighbor('portugal'); //call the GetCountryagetCountryAndNeighbor function
 // getCountryAndNeighbor('usa');
-// getCountryAndNeighbor('germany');
-// getCountryData('philippines');
+getCountryAndNeighbor('germany');
+// getCountryAndNeighbor('philippines');
