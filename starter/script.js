@@ -87,3 +87,35 @@ getCountryAndNeighbor('portugal'); //call the GetCountryagetCountryAndNeighbor f
 // getCountryAndNeighbor('usa');
 // getCountryAndNeighbor('germany');
 // getCountryAndNeighbor('philippines');
+
+//example of callback within callbacks
+// setTimeout(() => {
+//   console.log('1 second passsed');
+//   setTimeout(() => {
+//     console.log('2 second passsed');
+//     setTimeout(() => {
+//       console.log('3 second passsed');
+//       setTimeout(() => {
+//         console.log('4 second passsed');
+//       }, 1000);
+//     }, 1000);
+//   }, 1000);
+// }, 1000);
+//!=============
+////////////////
+// Promises and the Fetch API
+// const request = fetch('GET', `https://restcountries.com/rest/vs/name/portugal`);
+// console.log(request);
+
+const getCountryData = function (country) {
+  fetch(`https://rescountries.eu/rest/v2/name/${country}`).then(function (
+    response
+  ) {
+    console.log(response);
+  });
+};
+getCountryData('portugal');
+
+//the then method can be called on promises
+//promise: an object that is used as a placeholder for the future result of an asynchornous operation
+//or a container for a future value
