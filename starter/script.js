@@ -67,18 +67,19 @@ const getCountryAndNeighbor = function (country) {
     console.log(data);
     //render country 1
     renderCountry(data);
-    //get neighbor country (2)
-    const neighbour = data.borders;
-    if (!neighbour) return; //if there is no neighbor use the guard clause to return
+    //------get neighbor country (2)
+    const [neighbor] = data.borders;
+    if (!neighbor) return; //if there is no neighbor use the guard clause to return
+    //AJAX call country 2
     const request2 = new XMLHttpRequest();
-    request2.open('GET', `https://restcountries.com/v2/alpha/${neighbour}`);
+    request2.open('GET', `https://restcountries.com/v2/alpha/${neighbor}`);
     request2.send();
 
     request2.addEventListener('load', function () {
       const data2 = JSON.parse(this.responseText); //parse and destructure on load event
       console.log(data2);
 
-      renderCountry(data2, 'neighbour');
+      renderCountry(data2, 'neighbor');
     });
   });
 };
