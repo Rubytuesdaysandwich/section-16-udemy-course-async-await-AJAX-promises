@@ -104,16 +104,30 @@ getCountryAndNeighbor('portugal'); //call the GetCountryagetCountryAndNeighbor f
 //!=============
 ////////////////
 // Promises and the Fetch API
-// const request = fetch('GET', `https://restcountries.com/rest/vs/name/portugal`);
+// const request = fetch('https://restcountries.com/rest/v2/name/portugal');
 // console.log(request);
 
+// const getCountryData = function (country) {
+//   fetch(`https://restcountries.eu/rest/v2/name/${country}`)
+//     .then(function (response) {
+//       console.log(response);
+//       return response.json();
+//     })
+//     .then(function (data) {
+//       console.log(data);
+//       renderCountry(data[0]);
+//     });
+// };
+// getCountryData('portugal');
+//simplified with arrow functions promise
 const getCountryData = function (country) {
-  fetch(`https://rescountries.eu/rest/v2/name/${country}`).then(function (
-    response
-  ) {
-    console.log(response);
-  });
+  fetch(`https://restcountries.eu/rest/v2/name/${country}`) //fetch the  data
+    .then(response => response.json()) //take response the put it in json to be put together
+    .then(data => renderCountry(data[0])); //then render the country data
+  //get rid of call back hell
+  //the two then methods are a chain of promises
 };
+
 getCountryData('portugal');
 
 //the then method can be called on promises
