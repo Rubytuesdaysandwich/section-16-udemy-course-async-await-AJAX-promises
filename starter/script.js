@@ -55,35 +55,35 @@ const renderCountry = function (data, className) {
   countriesContainer.style.opacity = 1; //set the image to visible
 };
 
-const getCountryAndNeighbor = function (country) {
-  //AJAX call country 1
-  const request = new XMLHttpRequest();
-  request.open('GET', `https://restcountries.com/v2/name/${country}`);
-  request.send();
+// const getCountryAndNeighbor = function (country) {
+//   //AJAX call country 1
+//   const request = new XMLHttpRequest();
+//   request.open('GET', `https://restcountries.com/v2/name/${country}`);
+//   request.send();
 
-  request.addEventListener('load', function () {
-    //upon load parse the JSON file data
-    const [data] = JSON.parse(this.responseText);
-    console.log(data);
-    //render country 1
-    renderCountry(data);
-    //------get neighbor country (2)
-    const [neighbor] = data.borders;
-    if (!neighbor) return; //if there is no neighbor use the guard clause to return
-    //AJAX call country 2
-    const request2 = new XMLHttpRequest();
-    request2.open('GET', `https://restcountries.com/v2/alpha/${neighbor}`);
-    request2.send();
+//   request.addEventListener('load', function () {
+//     //upon load parse the JSON file data
+//     const [data] = JSON.parse(this.responseText);
+//     console.log(data);
+//     //render country 1
+//     renderCountry(data);
+//     //------get neighbor country (2)
+//     const [neighbor] = data.borders;
+//     if (!neighbor) return; //if there is no neighbor use the guard clause to return
+//     //AJAX call country 2
+//     const request2 = new XMLHttpRequest();
+//     request2.open('GET', `https://restcountries.com/v2/alpha/${neighbor}`);
+//     request2.send();
 
-    request2.addEventListener('load', function () {
-      const data2 = JSON.parse(this.responseText); //parse and destructure on load event
-      console.log(data2);
+//     request2.addEventListener('load', function () {
+//       const data2 = JSON.parse(this.responseText); //parse and destructure on load event
+//       console.log(data2);
 
-      renderCountry(data2, 'neighbor');
-    });
-  });
-};
-getCountryAndNeighbor('portugal'); //call the GetCountryagetCountryAndNeighbor function
+//       renderCountry(data2, 'neighbor');
+//     });
+//   });
+// };
+// getCountryAndNeighbor('portugal'); //call the GetCountryagetCountryAndNeighbor function
 // getCountryAndNeighbor('usa');
 // getCountryAndNeighbor('germany');
 // getCountryAndNeighbor('philippines');
@@ -121,14 +121,30 @@ getCountryAndNeighbor('portugal'); //call the GetCountryagetCountryAndNeighbor f
 // getCountryData('portugal');
 //simplified with arrow functions promise
 const getCountryData = function (country) {
-  fetch(`https://restcountries.eu/rest/v2/name/${country}`) //fetch the  data
+  //country 1
+  // const request = new XMLHttpRequest();
+  fetch(`https://restcountries.com/rest/v2/name/${country}`); //fetch the  data
+  // request
+    // .send()
     .then(response => response.json()) //take response the put it in json to be put together
-    .then(data => renderCountry(data[0])); //then render the country data
+    .then(data => {
+      renderCountry(data[0]); //then render the country data
+      const neighbor = data[0].borders[0];
+      if (!neighbor) return;
+      //country 2
+      return fetch(`https://restcountries.com/rest/v2/alpha/${neighbor}`);
+      // return 23;
+    })
+    .then(response => response.json())
+    .then(data => renderCountry(data, 'neighbor'));
+  // .then(data => alert(23));
   //get rid of call back hell
   //the two then methods are a chain of promises
 };
 
 getCountryData('portugal');
+getCountryData('germany');
+getCountryData('philippines');
 
 //the then method can be called on promises
 //promise: an object that is used as a placeholder for the future result of an asynchornous operation
