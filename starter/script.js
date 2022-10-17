@@ -327,3 +327,42 @@ const lotteryPromise = new Promise(function (resolve, reject) {
   }, 2000);
 });
 lotteryPromise.then(res => console.log(res)).catch(err => console.error(err));
+
+//promisifying setTimeout
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+wait(1)
+  .then(() => {
+    console.log('I waited for 1 seconds');
+    return wait(1);
+  })
+  .then(() => {
+    console.log('I waited for 2 seconds');
+    return wait(1);
+  })
+  .then(() => {
+    console.log('I waited for 3 seconds');
+    return wait(1);
+  })
+  .then(() => console.log('4 second passed'));
+
+// example of callback within callbacks
+// setTimeout(() => {
+//   console.log('1 second passsed');
+//   setTimeout(() => {
+//     console.log('2 second passsed');
+//     setTimeout(() => {
+//       console.log('3 second passsed');
+//       setTimeout(() => {
+//         console.log('4 second passsed');
+//       }, 1000);
+//     }, 1000);
+//   }, 1000);
+// }, 1000);
+Promise.resolve('abc').then(x => console.log(x));
+Promise.resolve(new Error('Problem!')).catch(x => console.error(x));
+//!=================================
