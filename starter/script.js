@@ -2,10 +2,7 @@
 
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
-const renderError = function (msg) {
-  countriesContainer.insertAdjacentText('beforeend', msg);
-  countriesContainer.style.opacity = 1;
-};
+
 const renderCountry = function (data, className) {
   const html = ` <article class="${className}">
     <img class="country__img" src="${data.flag}" />
@@ -20,7 +17,11 @@ const renderCountry = function (data, className) {
     </div>
   </article> `;
   countriesContainer.insertAdjacentHTML('beforeend', html);
-  countriesContainer.style.opacity = 1; //set the image to visible
+  //moved to getCountryData2// countriesContainer.style.opacity = 1; //set the image to visible
+};
+const renderError = function (msg) {
+  countriesContainer.insertAdjacentText('beforeend', msg);
+  countriesContainer.style.opacity = 1;
 };
 ///////////////////////////////////////
 // const getCountryData = function (country) {
@@ -166,7 +167,10 @@ const getCountryData2 = function (country) {
     //catch the error from the api not fetching
     .catch(err => {
       console.error(`${err}💥💥💥`);
-      renderError(`Something went wrong 💥💥💥${err}`);
+      renderError(`Something went wrong 💥💥💥${err.message}. Try again!`);
+    })
+    .finally(() => {
+      countriesContainer.style.opacity = 1;
     });
 
   // .then(data => alert(23));
