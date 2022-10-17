@@ -56,7 +56,7 @@ const renderError = function (msg) {
 // getCountryData('philippines');
 //!=======================
 //////////////////////////////////////////
-//GET COUNTRY AND NEIGHBOR
+//GET COUNTRY AND NEIGHBOuR
 
 //// const renderCountry = function (data, className) {
 ////   const html = ` <article class="${className}">
@@ -75,7 +75,7 @@ const renderError = function (msg) {
 ////   countriesContainer.style.opacity = 1; //set the image to visible
 //// };
 
-// const getCountryAndNeighbor = function (country) {
+// const getCountryAndNeighbour = function (country) {
 //AJAX call country 1
 // const request = new XMLHttpRequest();
 // request.open('GET', `https://restcountries.com/v2/name/${country}`);
@@ -87,26 +87,26 @@ const renderError = function (msg) {
 // console.log(data);
 //render country 1
 // renderCountry(data);
-//------get neighbor country (2)
-// const [neighbor] = data.borders;
-// if (!neighbor) return; //if there is no neighbor use the guard clause to return
+//------get neighbour country (2)
+// const [neighbour] = data.borders;
+// if (!neighbour) return; //if there is no neighbour use the guard clause to return
 //AJAX call country 2
 // const request2 = new XMLHttpRequest();
-// request2.open('GET', `https://restcountries.com/v2/alpha/${neighbor}`);
+// request2.open('GET', `https://restcountries.com/v2/alpha/${neighbour}`);
 // request2.send();
 
 // request2.addEventListener('load', function () {
 // const data2 = JSON.parse(this.responseText); //parse and destructure on load event
 // console.log(data2);
 
-// renderCountry(data2, 'neighbor');
+// renderCountry(data2, 'neighbour');
 // });
 // });
 // };
-// getCountryAndNeighbor('portugal'); //call the GetCountryagetCountryAndNeighbor function
-// getCountryAndNeighbor('america');
-// getCountryAndNeighbor('germany');
-// getCountryAndNeighbor('philippines');
+// getCountryAndNeighbour('portugal'); //call the GetCountryagetCountryAndNeighbour function
+// getCountryAndNeighbour('america');
+// getCountryAndNeighbour('germany');
+// getCountryAndNeighbour('philippines');
 
 //example of callback within callbacks
 // setTimeout(() => {
@@ -171,14 +171,14 @@ const getJSON = function (url, errorMsg = 'something went wrong') {
 //     //take response the put it in json to be put together
 //     .then(data => {
 //       renderCountry(data[0]); //then render the country data
-//       const neighbor = data[0].borders[0];
-//       if (!neighbor) return;
+//       const neighbour = data[0].borders[0];
+//       if (!neighbour) return;
 //       //country 2
-//       return fetch(`https://restcountries.eu/rest/v2/alpha/${neighbor}`);
+//       return fetch(`https://restcountries.eu/rest/v2/alpha/${neighbour}`);
 //       // return 23;
 //     })
 //     .then(response => response.json())
-//     .then(data => renderCountry(data, 'neighbor'))
+//     .then(data => renderCountry(data, 'neighbour'))
 //     //catch the error from the api not fetching
 //     .catch(err => {
 //       //using catch to catch failed promises is a good practice
@@ -223,14 +223,17 @@ const getCountryData3 = function (country) {
     //take response the put it in json to be put together
     .then(data => {
       renderCountry(data[0]); //then render the country data
-      const neighbor = data[0].borders[0];
-      if (!neighbor) return;
+      const neighbour = data[0].borders[0];
+      if (!neighbour) throw new Error('No neighbour found!');
       //country 2
-      return fetch(`https://restcountries.eu/rest/v2/alpha/${neighbor}`);
+      return getJSON(
+        `https://restcountries.eu/rest/v2/alpha/${neighbour}`,
+        'country not found'
+      );
       // return 23;
     })
-    .then(response => response.json())
-    .then(data => renderCountry(data, 'neighbor'))
+    //// .then(response => response.json())
+    .then(data => renderCountry(data, 'neighbour'))
     //catch the error from the api not fetching
     .catch(err => {
       //using catch to catch failed promises is a good practice
@@ -248,5 +251,5 @@ const getCountryData3 = function (country) {
 };
 
 btn.addEventListener('click', function () {
-  getCountryData2('portugal');
+  getCountryData3('australia');
 });
