@@ -146,14 +146,81 @@ const renderError = function (msg) {
 ////   countriesContainer.insertAdjacentText('beforeend', msg);
 ////   countriesContainer.style.opacity = 1;
 //// };
-const getCountryData2 = function (country) {
-  //country 1
+const getJSON = function (url, errorMsg = 'something went wrong') {
+  return fetch(url).then(response => {
+    console.log(response);
+    if (!response.ok) {
+      //this is being passed to the catch method
+      throw new Error(`${errorMsg} (${response.status})`);
+    }
+    return response.json();
+  });
+};
+// const getCountryData2 = function (country) {
+//   //country 1
 
-  fetch(`https://restcountries.com/v2/name/${country}`) //fetch the  data
-    .then(
-      response => response.json(),
-      err => alert(err) //catching the fetch api error
-    ) //take response the put it in json to be put together
+//   fetch(`https://restcountries.com/v2/name/${country}`) //fetch the  data
+//     .then(response => {
+//       console.log(response);
+//       if (!response.ok) {
+//         //this is being passed to the catch method
+//         throw new Error(`country not found (${response.status})`);
+//       }
+//       return response.json();
+//     })
+//     //take response the put it in json to be put together
+//     .then(data => {
+//       renderCountry(data[0]); //then render the country data
+//       const neighbor = data[0].borders[0];
+//       if (!neighbor) return;
+//       //country 2
+//       return fetch(`https://restcountries.eu/rest/v2/alpha/${neighbor}`);
+//       // return 23;
+//     })
+//     .then(response => response.json())
+//     .then(data => renderCountry(data, 'neighbor'))
+//     //catch the error from the api not fetching
+//     .catch(err => {
+//       //using catch to catch failed promises is a good practice
+//       //catching the fetch api error
+//       console.error(`${err}💥💥💥`);
+//       renderError(`Something went wrong 💥💥💥${err.message}. Try again!`);
+//     })
+//     .finally(() => {
+//       countriesContainer.style.opacity = 1;
+//     });
+
+//   // .then(data => alert(23));
+//   //get rid of call back hell
+//   //the two then methods are a chain of promises
+// };
+
+// btn.addEventListener('click', function () {
+//   getCountryData2('portugal');
+// });
+// getCountryData2('adfafa');//return country not found 404
+// getCountryData2('germany');
+// getCountryData2('philippines');
+
+//the then method can be called on promises
+//promise: an object that is used as a placeholder for the future result of an asynchornous operation
+//or a container for a future value
+
+//!======================
+const getCountryData3 = function (country) {
+  //country 1
+  //the getJSON function gets the url and error message making the code block much cleaner to prevent repeating ourselves
+  getJSON(`https://restcountries.com/v2/name/${country}`, 'country  not found')
+    //// fetch(`https://restcountries.com/v2/name/${country}`) //fetch the  data
+    ////   .then(response => {
+    ////     console.log(response);
+    ////     if (!response.ok) {
+    //       //this is being passed to the catch method
+    ////       throw new Error(`country not found (${response.status})`);
+    ////     }
+    ////     return response.json();
+    ////   })
+    //take response the put it in json to be put together
     .then(data => {
       renderCountry(data[0]); //then render the country data
       const neighbor = data[0].borders[0];
@@ -166,6 +233,8 @@ const getCountryData2 = function (country) {
     .then(data => renderCountry(data, 'neighbor'))
     //catch the error from the api not fetching
     .catch(err => {
+      //using catch to catch failed promises is a good practice
+      //catching the fetch api error
       console.error(`${err}💥💥💥`);
       renderError(`Something went wrong 💥💥💥${err.message}. Try again!`);
     })
@@ -181,9 +250,3 @@ const getCountryData2 = function (country) {
 btn.addEventListener('click', function () {
   getCountryData2('portugal');
 });
-// getCountryData2('germany');
-// getCountryData2('philippines');
-
-//the then method can be called on promises
-//promise: an object that is used as a placeholder for the future result of an asynchornous operation
-//or a container for a future value
