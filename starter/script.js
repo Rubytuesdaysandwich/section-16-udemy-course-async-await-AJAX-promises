@@ -581,7 +581,7 @@ const get3Countries = async function (c1, c2, c3) {
     // console.log(data1.capital, data2.capital, data3.capital);
     const data = await Promise.all([
       //runs all the promises at the same time
-      getJSON(`https://restcountries.com/v3.1/name/${c1}`),
+      getJSON(`https://restcountries.com/v3.1/name/${c1}`), //getting the capital of the countries from the API using json
       getJSON(`https://restcountries.com/v3.1/name/${c2}`),
       getJSON(`https://restcountries.com/v3.1/name/${c3}`),
     ]);
@@ -591,3 +591,4 @@ const get3Countries = async function (c1, c2, c3) {
   }
 };
 get3Countries('portugal', 'canada', 'tanzania');
+get3Countries('philippines', 'america', 'france');
