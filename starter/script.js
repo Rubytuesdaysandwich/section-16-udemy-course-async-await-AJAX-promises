@@ -731,11 +731,19 @@ const loadNPause = async function () {
 loadNPause();
 
 //Part 2
+//load the promises before the images
 const loadAll = async function (imgArr) {
   try {
-    const imgs2 = imgArr.map(async img => await createImage(img));
+    // await pauses the execution of the function
+    const imgs = imgArr.map(async img => await createImage(img)); //return 3 times from the async function
+    // console.log(imgs);
+    const imgsEl = await Promise.all(imgs); //using promise.all to handle the array of images
+    console.log(imgsEl);
+    imgsEl.forEach(img => img.classList.add('parallel'));
   } catch (err) {
     console.error(err);
   }
 };
 loadAll(['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']);
+//!========== end of section 16!!!
+//////////////////////////////////////
