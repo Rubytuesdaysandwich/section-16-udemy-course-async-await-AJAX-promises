@@ -716,13 +716,13 @@ const loadNPause = async function () {
     //load img 1
     let img = await createImage('img/img-1.jpg');
     console.log('Image 1 loaded');
-    await wait(2);
+    await wait(2); // wait 2 seconds
     img.style.display = 'none';
 
     //load img 2
     img = await createImage('img/img-2.jpg');
-    console.log('Image 2 loaded');
-    await wait(2);
+    console.log('Image 2 loaded'); //once the image is load on the promise await it post to the console
+    await wait(2); // wait 2 seconds
     img.style.display = 'none';
   } catch (err) {
     console.error(err);
@@ -747,3 +747,7 @@ const loadAll = async function (imgArr) {
 loadAll(['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']);
 //!========== end of section 16!!!
 //////////////////////////////////////
+/* A Promise is a proxy for a value not necessarily known when the promise is created. 
+It allows you to associate handlers with an asynchronous action's eventual success value or failure reason.
+ This lets asynchronous methods return values like synchronous methods: instead of immediately returning the final value, 
+ the asynchronous method returns a promise to supply the value at some point in the future.*/
