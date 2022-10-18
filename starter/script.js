@@ -709,3 +709,23 @@ createImage('img/img-1.jpg')
     return createImage('img/img-3.jpg');
   })
   .catch(err => console.log(err));
+
+  const loadNPause = async function(){
+    try {
+      //load img 1
+     let img = await createImage('img/img-1.jpg')
+     console.log('Image 1 loaded');
+     await wait(2);
+     img.stlye.display ='none'
+
+      //load img 2
+     img = await createImage('img/img-1.jpg')
+      console.log('Image 1 loaded');
+      await wait(2);
+      img.stlye.display ='none'
+
+    } catch (err) {
+      console.error(err);
+    }
+    }
+  }
